@@ -8,6 +8,31 @@ from django.http import HttpResponse
 from django.db.models import Q
 
 
+
+def add_cart(request, product_id):
+    product = get_object_or_404(Product, id=product_id)
+    cart_id = _cart_id(request)  # Assuming this function retrieves the cart ID
+
+    # Logic to add the product to the cart
+    try:
+        cart_item = CartItem.objects.get(cart__cart_id=cart_id, product=product)
+        cart_item.quantity += 1  # Increase quantity if already in cart
+        cart_item.save()
+    except CartItem.DoesNotExist:
+        cart_item = CartItem.objects.create(
+            product=product,
+            quantity=1,
+            cart_id=cart_id
+        )
+    
+    return redirect('store')  # Redirect to the store page or another page as needed
+
+
+
+
+
+
+
 def store(request, category_slug=None):
     categories = None
     products = None
