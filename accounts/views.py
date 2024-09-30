@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect  # Added redirect import
 from .forms import RegistrationForm
-from .models import Account  # Assuming Account is the model for user creation
+from .models import Account
+from django.contrib import messages
 
 
 def register(request):
     if request.method == 'POST':
-        form = RegistrationForm(request.POST)  # Correct indentation here
+        form = RegistrationForm(request.POST)
         if form.is_valid():
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -16,8 +17,10 @@ def register(request):
             user = Account.objects.create_user(first_name=first_name, last_name=last_name, email=email, username=username, password=password)
             user.phone_number = phone_number
             user.save()
+            messages.success(request, 'Registration successful')
+            return redirect('register')
     else:
-        form = RegistrationForm()  # Indentation fixed here too
+        form = RegistrationForm()
 
     context = {
         'form': form
@@ -30,4 +33,4 @@ def login(request):
 
 
 def logout(request):
-    return
+    return 
