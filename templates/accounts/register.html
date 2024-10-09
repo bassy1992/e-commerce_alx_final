@@ -1,13 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
 <!-- ========================= SECTION CONTENT ========================= -->
 <section class="section-content padding-y">
-
     <!-- ============================ COMPONENT REGISTER   ================================= -->
-        <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
-          <article class="card-body">
+    <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
+        <article class="card-body">
             {% include 'includes/alerts.html' %}
             <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
             <form action="{% url 'register' %}" method="POST">
@@ -15,49 +13,82 @@
                 
                 <div class="form-row">
                     <div class="col form-group">
-                        <label>First name</label>
-                        {{ form.first_name }} <!-- This renders the input for first name -->
+                        <label for="first_name">First name</label>
+                        {{ form.first_name }}
+                        {% if form.first_name.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.first_name.errors }}
+                            </div>
+                        {% endif %}
                     </div> <!-- form-group end.// -->
                     <div class="col form-group">
-                        <label>Last name</label>
-                        {{ form.last_name }} <!-- This renders the input for last name -->
+                        <label for="last_name">Last name</label>
+                        {{ form.last_name }}
+                        {% if form.last_name.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.last_name.errors }}
+                            </div>
+                        {% endif %}
                     </div> <!-- form-group end.// -->
                 </div> <!-- form-row end.// -->
                 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Email Address</label>
-                        {{ form.email }} <!-- This renders the email input field -->
+                        <label for="email">Email Address</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
                     </div> <!-- form-group end.// -->
                     <div class="form-group col-md-6">
-                        <label>Phone Number</label>
-                        {{ form.phone_number }} 
-                    </div> 
+                        <label for="phone_number">Phone Number</label>
+                        {{ form.phone_number }}
+                        {% if form.phone_number.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.phone_number.errors }}
+                            </div>
+                        {% endif %}
+                    </div> <!-- form-group end.// -->
                 </div> <!-- form-row.// -->
                 
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <label>Create password</label>
+                        <label for="password">Create password</label>
                         {{ form.password }}
+                        {% if form.password.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.password.errors }}
+                            </div>
+                        {% endif %}
                     </div> 
                     <div class="form-group col-md-6">
-                        <label>Repeat password</label>
-                        {{ form.confirm_password }} 
+                        <label for="confirm_password">Repeat password</label>
+                        {{ form.confirm_password }}
+                        {% if form.confirm_password.errors %}
+                            <div class="invalid-feedback">
+                                {{ form.confirm_password.errors }}
+                            </div>
+                        {% endif %}
                     </div> 
-                </div>
+                </div> <!-- form-row.// -->
                 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block"> Register </button>
-                </div> <!-- form-group// -->      
-             {{ form.email.errors }}
-             {{ form.non_field_errors }}           
+                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                </div> <!-- form-group// -->
+
+                {% if form.non_field_errors %}
+                    <div class="alert alert-danger" role="alert">
+                        {{ form.non_field_errors }}
+                    </div>
+                {% endif %}
             </form>
           </article><!-- card-body.// -->
         </div> <!-- card .// -->
-        <p class="text-center mt-4">Have an account? <a href="">Log In</a></p>
+        <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
         <br><br>
     <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
-    
 </section>
-
+<!-- ========================= SECTION CONTENT END// ========================= -->
 {% endblock %}
