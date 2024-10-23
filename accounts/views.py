@@ -11,7 +11,6 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.utils.encoding import force_bytes
 from django.contrib.auth.tokens import default_token_generator
 from django.core.mail import EmailMessage
-
 from carts.views import _cart_id
 from carts.models import Cart, CartItem
 
@@ -60,6 +59,17 @@ def login(request):
        user = auth.authenticate(email=email, password=password)
 
        if user is not None:
+           try:
+               cart = Cart.objects.get(cart_id=_cart_id(request)) 
+               is_cart_item_exist = CartItem.objects.filter(cart=cart).exists()
+               if is_cart_item_exist:
+                   cart_items = CartItem.objects.filter(cart=cart)
+
+                   for item in cart_items:
+                       item.user = user
+                       item.save()
+           except Cart.DoesNotExist:
+               pass    
            auth.login(request, user)
            messages.success(request, 'You are now logged in')
            return redirect('dashboard')
@@ -92,8 +102,6 @@ def activate(request, uidb64, token):
 def dashboard(request):
     return render(request, 'accounts/dashboard.html')
 
-
-
 def forgotPassword(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -105,7 +113,7 @@ def forgotPassword(request):
             mail_subject = 'Reset Your Password'
             message = render_to_string('accounts/reset_password_email.html', {
                 'user': user,
-                'domain': current_site,
+                'domain': current_site.domain,
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': default_token_generator.make_token(user),
             })
@@ -119,9 +127,6 @@ def forgotPassword(request):
             messages.error(request, 'Account does not exist!')
             return redirect('forgotPassword')
     return render(request, 'accounts/forgotPassword.html')
-
-
-
 
 def resetpassword_validate(request, uidb64, token):
     try:
@@ -137,7 +142,6 @@ def resetpassword_validate(request, uidb64, token):
     else:
         messages.error(request, 'This link has been expired!')
         return redirect('login')
-    
 
 def resetPassword(request):
     if request.method == 'POST':
