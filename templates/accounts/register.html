@@ -1,94 +1,146 @@
 {% extends 'base.html' %}
-
 {% block content %}
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-content padding-y">
-    <!-- ============================ COMPONENT REGISTER   ================================= -->
-    <div class="card mx-auto" style="max-width:520px; margin-top:40px;">
-        <article class="card-body">
-            {% include 'includes/alerts.html' %}
-            <header class="mb-4"><h4 class="card-title">Sign up</h4></header>
-            <form action="{% url 'register' %}" method="POST">
-                {% csrf_token %}
-                
-                <div class="form-row">
-                    <div class="col form-group">
-                        <label for="first_name">First name</label>
-                        {{ form.first_name }}
-                        {% if form.first_name.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.first_name.errors }}
-                            </div>
-                        {% endif %}
-                    </div> <!-- form-group end.// -->
-                    <div class="col form-group">
-                        <label for="last_name">Last name</label>
-                        {{ form.last_name }}
-                        {% if form.last_name.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.last_name.errors }}
-                            </div>
-                        {% endif %}
-                    </div> <!-- form-group end.// -->
-                </div> <!-- form-row end.// -->
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="email">Email Address</label>
-                        {{ form.email }}
-                        {% if form.email.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.email.errors }}
-                            </div>
-                        {% endif %}
-                    </div> <!-- form-group end.// -->
-                    <div class="form-group col-md-6">
-                        <label for="phone_number">Phone Number</label>
-                        {{ form.phone_number }}
-                        {% if form.phone_number.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.phone_number.errors }}
-                            </div>
-                        {% endif %}
-                    </div> <!-- form-group end.// -->
-                </div> <!-- form-row.// -->
-                
-                <div class="form-row">
-                    <div class="form-group col-md-6">
-                        <label for="password">Create password</label>
-                        {{ form.password }}
-                        {% if form.password.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.password.errors }}
-                            </div>
-                        {% endif %}
-                    </div> 
-                    <div class="form-group col-md-6">
-                        <label for="confirm_password">Repeat password</label>
-                        {{ form.confirm_password }}
-                        {% if form.confirm_password.errors %}
-                            <div class="invalid-feedback">
-                                {{ form.confirm_password.errors }}
-                            </div>
-                        {% endif %}
-                    </div> 
-                </div> <!-- form-row.// -->
-                
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
-                </div> <!-- form-group// -->
 
-                {% if form.non_field_errors %}
-                    <div class="alert alert-danger" role="alert">
-                        {{ form.non_field_errors }}
-                    </div>
-                {% endif %}
-            </form>
-          </article><!-- card-body.// -->
-        </div> <!-- card .// -->
-        <p class="text-center mt-4">Have an account? <a href="{% url 'login' %}">Log In</a></p>
-        <br><br>
-    <!-- ============================ COMPONENT REGISTER  END.// ================================= -->
-</section>
-<!-- ========================= SECTION CONTENT END// ========================= -->
+
+<div class="min-h-screen w-full bg-gray-50">
+    <section class="py-4 md:py-8 bg-gray-50 mt-10">
+        <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+            <div class="w-full bg-white rounded-lg shadow md:mt-0 sm:max-w-xl xl:p-0">
+                <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-700 md:text-2xl text-center">
+                        Create an Account
+                    </h1>
+                    <p class="text-center">You must become a member by creating an account.</p>
+
+                    <form class="w-full pb-16 space-y-5" action="{% url 'register' %}" method="POST">
+                        {% csrf_token %}
+                        <fieldset class="relative">
+                            <legend class="mb-6">
+                                <h4 class="font-semibold text-gray-800">Profile Info</h4>
+                                <p class="text-sm">Help us know who you're.</p>
+                            </legend>
+                            <div class="grid grid-cols-12 gap-4">
+                                <div class="col-span-12 sm:col-span-6">
+                                    <div>
+                                        <label for="first_name"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            First Name
+                                        </label>
+                                        <input type="text" name="first_name" id="first_name" placeholder="Emmanuel"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required="">
+                                        {% if form.first_name.errors %}
+                                        <p class="text-xs text-red-500"> {{ form.first_name.errors }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-span-12 sm:col-span-6">
+                                    <div>
+                                        <label for="last_name"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Last Name
+                                        </label>
+                                        <input type="text" name="last_name" id="last_name" placeholder="Last name"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required="">
+                                        {% if form.last_name.errors %}
+                                        <p class="text-xs text-red-500"> {{ form.last_name.errors }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-span-12 sm:col-span-6">
+                                    <div>
+                                        <label for="email"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Email Address
+                                        </label>
+                                        <input type="email" name="email" id="email" placeholder="Email Address"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required="">
+                                        {% if form.email.errors %}
+                                        <p class="text-xs text-red-500"> {{ form.email.errors }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-span-12 sm:col-span-6">
+                                    <div>
+                                        <label for="phone_number"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Phone Number
+                                        </label>
+                                        <input type="text" name="phone_number" id="phone_number"
+                                            placeholder="0545000000"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required="">
+                                        {% if form.phone_number.errors %}
+                                        <p class="text-xs text-red-500">{{ form.phone_number.errors }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <fieldset class="relative">
+                            <legend class="mb-6">
+                                <h4 class="font-semibold text-gray-800">Security</h4>
+                                <p class="text-sm">Secure your account with strong password</p>
+                            </legend>
+                            <div class="grid grid-cols-12 gap-4">
+                                <div class="col-span-12">
+                                    <div>
+                                        <label for="password"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Password
+                                        </label>
+                                        <input type="password" name="password" id="password" placeholder="Password"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required="">
+                                        {% if form.password.errors %}
+                                        <p class="text-xs text-red-500">{{ form.password.errors }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-span-12">
+                                    <div>
+                                        <label for="password"
+                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                            Confirm Password
+                                        </label>
+                                        <input type="password" name="confirm_password" id="confirm_password"
+                                            placeholder="Confirm Password"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                            required="">
+                                        {% if form.confirm_password.errors %}
+                                        <p class="text-xs text-red-500">{{ form.confirm_password.errors }}</p>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+
+                        <div class="space-y-2">
+                            <button type="submit"
+                                class="text-white bg-orange-500 py-1.5 px-4 rounded  w-full uppercase">
+                                Sign up
+                            </button>
+                            {% if form.non_field_errors %}
+                            <div class="text-red-500" role="alert">
+                                {{ form.non_field_errors }}
+                            </div>
+                            {% endif %}
+                            <p class="text-sm text-center text-gray-500 dark:text-gray-400">
+                                Already have an account?
+                                <a href="{% url 'login' %}"
+                                    class="font-medium text-orange-500 hover:underline dark:text-orange-500">
+                                    Login Here
+                                </a>
+                            </p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
 {% endblock %}

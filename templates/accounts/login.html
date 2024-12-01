@@ -1,41 +1,51 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-<!-- ========================= SECTION CONTENT ========================= -->
-<section class="section-conten padding-y" style="min-height:84vh">
+<section class="py-4 md:py-8 bg-gray-50">
+  <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+    <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-700 md:text-2xl text-center">
+          Sign In Access
+        </h1>
+        <p class="text-center">You must become a member to Login and access</p>
 
-    <!-- ============================ COMPONENT LOGIN   ================================= -->
-        <div class="card mx-auto" style="max-width: 380px; margin-top:100px;">
-          <div class="card-body">
-          <h4 class="card-title mb-4">Sign in</h4>
-          {% include 'includes/alerts.html' %}
-          <form action="{% url 'login' %}" method="POST">
-            {% csrf_token %}
-              <div class="form-group">
-                 <input type="email" class="form-control" placeholder="Email Address" name="email" >
-              </div> <!-- form-group// -->
-              <div class="form-group">
-                <input type="password" class="form-control" placeholder="Password" name="password" >
-              </div> <!-- form-group// -->
-              
-              <div class="form-group">
-                  <a href="{% url 'forgotPassword' %}" class="float-right">Forgot password?</a> 
-               
-              </div> <!-- form-group form-check .// -->
-              <div class="form-group">
-                  <button type="submit" class="btn btn-primary btn-block"> Login  </button>
-              </div> <!-- form-group// -->    
-          </form>
-          </div> <!-- card-body.// -->
-        </div> <!-- card .// -->
-    
-         <p class="text-center mt-4">Don't have account?<a href="{% url 'register' %}"> Sign up </a></p>
-         <br><br>
-    <!-- ============================ COMPONENT LOGIN  END.// ================================= -->
-    
-    
-    </section>
+        <form class="space-y-3 md:space-y-6" action="{% url 'login' %}" method="POST">
+          {% csrf_token %}
+          <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email
+              Address</label>
+            <input type="email" name="email" id="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="name@company.com" required="">
+          </div>
+          <div>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-orange-500 focus:border-orange-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required="">
+          </div>
+          <div class="flex items-center justify-between">
+            <a href="{% url 'forgotPassword' %}"
+              class="text-sm font-medium text-orange-500 hover:underline dark:text-orange-500">
+              Forgot password?
+            </a>
+          </div>
+
+          <button type="submit" class="text-white bg-orange-500 py-1.5 px-4 rounded  w-full uppercase">
+            Login
+          </button>
+          <p class="text-sm text-center text-gray-500 dark:text-gray-400">
+            Not a member yet?
+            <a href="{% url 'register' %}" class="font-medium text-orange-500 hover:underline">
+              Create an Acccount
+            </a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
 
 {% endblock %}
